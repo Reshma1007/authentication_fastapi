@@ -14,8 +14,8 @@ JWT_SECRET = 'myjwtsecret'
 
 class User(Model):
     id = fields.IntField(pk=True)
-    username= fields.charFields(50, unique=True)
-    password_hash = fields.CharFields(128)
+    username= fields.CharField(50, unique=True)
+    password_hash = fields.CharField(128)
 
   
 
