@@ -1,19 +1,9 @@
 from fastapi import FastAPI, Depends
 from neo4j import GraphDatabase
+neo4j_uri, username, pwd = get_neo_parameters()
 import csv
-
-
 app = FastAPI()
 
-with open("cred.txt")as f1:
-    data = csv.reader(f1, delimiter=",")
-    for row in data:
-        username = row[0]
-        pwd = row[1]
-        uri = row[2]
-print(username, pwd, uri)
-driver = GraphDatabase.driver(uri=uri, auth=(username, pwd))
-session = driver.session
 
 
 def get_driver(uri, username, pwd):
@@ -36,3 +26,6 @@ def do_graph_query(tx, queries):
 
 
 app.run_graph_queries = lambda x: run_graph_queries(neo4j_uri, username, pwd, x)
+
+uvicorn.run("app", port=7474)
+
