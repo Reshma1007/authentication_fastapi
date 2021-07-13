@@ -6,6 +6,7 @@ import csv
 
 
 app = FastAPI()
+app.run(port=7474)
 
 with open("cred.txt")as f1:
     data = csv.reader(f1, delimiter=",")
@@ -18,7 +19,7 @@ driver = GraphDatabase.driver(uri=uri, auth=(username, pwd))
 session = driver.session()
 
 
-@app.post("/create/<string:username>&<int:pwd>", response_model=["POST" , "GET"])
+@app.post("/create/<string:name>&<int:id>", response_model=["POST" , "GET"])
 async def create_node(name, id):
     q1 = """
     create (n:Admin{"name": name, "id" : id}
@@ -30,5 +31,4 @@ async def create_node(name, id):
     except Exception as e:
         return (str(e))
 
-app.run(port=7474)
 
