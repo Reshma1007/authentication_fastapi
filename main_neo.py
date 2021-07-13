@@ -19,7 +19,7 @@ driver = GraphDatabase.driver(uri=uri, auth=(username, pwd))
 session = driver.session()
 
 
-@app.post("/create/<string:name>&<int:id>", response_model=["POST" , "GET"])
+@app.route("/create/<string:name>&<int:id>", response_model=["POST" , "GET"])
 async def create_node(name, id):
     q1 = """
     create (n:Admin{"name": name, "id" : id}
