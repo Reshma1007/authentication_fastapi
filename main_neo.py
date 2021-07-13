@@ -1,31 +1,35 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from neo4j import GraphDatabase
-neo4j_uri, username, pwd = get_neo_parameters()
+import app as app
+
 import csv
+
+
 app = FastAPI()
 
+with open("cred.txt")as f1:
+    data = csv.reader(f1, delimiter=",")
+    for row in data:
+        username = row[0]
+        pwd = row[1]
+        uri = row[2]
+print(username, pwd, uri)
+driver = GraphDatabase.driver(uri=uri, auth=(username, pwd))
+session = driver.session()
 
 
-def get_driver(uri, username, pwd):
-    driver = GraphDatabase.driver(uri, auth=(username, pwd))
-    return driver
-
-def run_graph_queries(uri, username, pwd, queries, do_graph_queries):
-    driver = get_driver(uri, username, pwd)
-    with driver.session() as session:
-        r = session.read_transaction(do_graph_queries, queries)
-        return r
-
-
-def do_graph_query(tx, queries):
-    result = []
-    for query in queries:
-        res = tx.run(query['query'], query['parameters'])
-        result.append(res.graph())
-    return result
+@app.post("/create/<string:username>&<int:pwd>", response_model=["POST"])
+async def create_node(name, id):
+    q1 = """
+    create (n:Admin{"name": name, "id" : id}
+    """
+    map={"name": name, "id": id}
+    try:
+        session.run(q1, map)
+        return (f"admin node is created with admin name={name}  and id={id}")
+    except Exception as e:
+        return (str(e))
 
 
-app.run_graph_queries = lambda x: run_graph_queries(neo4j_uri, username, pwd, x)
-
-uvicorn.run("app", port=7474)
+    app.run(port=7474)
 
