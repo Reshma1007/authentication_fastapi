@@ -18,7 +18,7 @@ driver = GraphDatabase.driver(uri=uri, auth=(username, pwd))
 session = driver.session()
 
 
-@app.post("/create/<string:username>&<int:pwd>", response_model=["POST"])
+@app.post("/create/<string:username>&<int:pwd>", response_model=["POST" , "GET"])
 async def create_node(name, id):
     q1 = """
     create (n:Admin{"name": name, "id" : id}
@@ -30,6 +30,5 @@ async def create_node(name, id):
     except Exception as e:
         return (str(e))
 
-
-    app.run(port=7474)
+app.run(port=7474)
 
