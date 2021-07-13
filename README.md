@@ -16,5 +16,7 @@ authentication using fastapi(using neo4j(for db))
 install fastapi and install neo4j package.
 here i have used neo4j for storing data.
 NEO4J-in this datas are stored in graphs.
+use Neo4j Sandbox to view the database
+unique port number will be provided port should be used in code to run the server
 
 
