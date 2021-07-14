@@ -22,6 +22,6 @@ open neo4j in browser and create the account thn create new project select the l
 click extenstion to view your port number,http port,bolt port 
 copy the bolt url and paste it in the txt file create in pycharm/vc.
 we will be creating the username and password using neo4j as database
-unique port number will be provided port should be used in code to run the server
+unique password will be provided that should be used in txt file to run the server
 
 
