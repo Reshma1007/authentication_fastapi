@@ -6,7 +6,7 @@ import csv
 
 
 app = FastAPI()
-app.run(port=7474)
+app.run(port=5050)
 
 with open("cred.txt")as f1:
     data = csv.reader(f1, delimiter=",")
